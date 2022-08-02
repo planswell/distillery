@@ -858,10 +858,8 @@ defmodule Distillery.Releases.Assembler do
     # unpacks a release in order to "fix" the invalid ERTS lib paths, but unfortunately
     # this is not exposed, and short of re-writing release_handler from scratch, there is
     # no work around for this
-    old_cwd = File.cwd!()
-    File.cd!(output_dir)
-    :ok = :release_handler.create_RELEASES('./', 'releases', '#{relfile}', [])
-    File.cd!(old_cwd)
+    :ok = :release_handler.create_RELEASES('./', Path.join([output_dir, 'releases']) |> Path.expand(), '#{relfile}', [])
+
     :ok
   end
 
